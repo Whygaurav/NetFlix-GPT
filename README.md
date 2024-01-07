@@ -2,7 +2,10 @@
 // [ReactJS, FireBase, How to Handle Firms, ChatGPT, GPT APIs, etc.]
 - Create React App
 - Configured TailwindCSS
--
+- Header
+- Login Form
+- Sign Up Form
+- 
 
 # FEATURES
 * LogIn/SignUp Page
