@@ -19,7 +19,7 @@ const Login = () => {
     //Firstly Validate the Form data
     // console.log(email.current.value);
 
-    const message = checkValidData(email.current.value, password.current.value, name.current.value);
+    const message = checkValidData(email?.current?.value, password?.current?.value, name?.current?.value);
     setErrorMessage(message);
     //If Email and Password are correct then proceede to SignIn/SignUp
   };
