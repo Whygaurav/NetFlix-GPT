@@ -2,17 +2,22 @@
 import { useState, useRef } from 'react';
 import Header from './Header'
 import { checkValidData } from '../utils/validate';
-import {  createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {  createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/userSlice';
 
 const Login = () => {
   
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const email = useRef(null);
   const password = useRef(null);
-  // const name = useRef(null);
+  const name = useRef(null);
 
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
@@ -34,7 +39,27 @@ const Login = () => {
           .then((userCredential) => {
             // Signed up 
             const user = userCredential.user;
-            console.log(user);
+            // Now updating the user profile
+                updateProfile(user, {
+                  displayName: name.current.value, photoURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZimQhGEtkeftxPU80Wr5gX7RBDcVIGP920HG_syI9VJ24Xk20bngfbQcqhXXfUBRQqn8&usqp=CAU"
+                })
+                  .then(() => {
+                    const { uid, email, displayName, photoURL } = auth.currentUser;
+                    dispatch(
+                      addUser({
+                          uid: uid, 
+                          email: email, 
+                          displayName: displayName, 
+                          photoURL: photoURL
+                      })
+                    );
+                    navigate("/browse");
+                    // Profile updated!
+                  })
+                  .catch((error) => {
+                    setErrorMessage(errorMessage);
+                  });
+            // console.log(user);
             //So if the API passes then I am signed in and will get a user object
           })
           //And if the API fails then i get an error that is managed by catch block:
@@ -51,7 +76,7 @@ const Login = () => {
             // Signed in 
             const user = userCredential.user;
             console.log(user);
-            // ...
+            navigate("/browse");
           })
           .catch((error) => {
             const errorCode = error.code;
@@ -74,7 +99,7 @@ const Login = () => {
           <h1 className=' font-bold text-3xl py-4'>{isSignInForm ? "Sign In" : "Sign Up"}</h1>
           
           {!isSignInForm && <input 
-            // ref = {name}
+            ref = {name}
             type="text" 
             placeholder="Full Name" 
             className='p-4 my-4 w-full bg-gray-800 rounded-lg'
