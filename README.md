@@ -16,7 +16,7 @@
 - Implemented Sign out
 - Update Profile
 - BUG FIX: Sign up user displayName and update profile picture
-------------------------------------
+---------------------------------------------------------------------------------------------------------
 - BUG FIX: If the user in not logged in then redirect /browse to Sign In page and vice-versa
 - GOOD PRACTICE: Unsubscribing the useEffect hook(i.e. onAuthStateChanged callback) after unmounting
 - GOOD PRACTICE: Add hardcoded values(URLs, images, strings) to the constant file
@@ -30,7 +30,12 @@
 - Update store with trailer video data
 - Embedded the Youtube video and made it to autoplay & mute 
 - Added Tailwind CSS everywhere
--
+- Build SECONDARY COMPONENT
+- Build Movie List
+- Build Movie Card
+- TMDB Image CDN URL
+- usePopularMovie custom hook
+----------------------------------------------------------------------------------------------------------
 
 
 # FEATURES
